@@ -11,10 +11,10 @@ const steps = [
         description:
             "Clone your fork locally and install dependencies. Ensure the project runs successfully before making changes.",
         code: `git clone https://github.com/rajbodhak/BuildBox.git
-cd BuildBox
-npm install
-npm run dev`,
-    },
+                cd BuildBox
+                npm install
+                npm run dev`,
+                    },
     {
         title: "Create a focused branch",
         description:
