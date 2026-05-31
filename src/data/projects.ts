@@ -1,0 +1,42 @@
+import type { Project } from '../types'
+
+export const projects: Project[] = [
+    { name: 'Todo App', icon: '✓', tag: 'beginner', cat: 'beginner' },
+    { name: 'Weather App', icon: '☁', tag: 'api', cat: 'api', featured: true },
+    { name: 'Password Generator', icon: '⌘', tag: 'tool', cat: 'tool' },
+    { name: 'QR Code Generator', icon: '▦', tag: 'tool', cat: 'tool' },
+    { name: 'Notes App', icon: '✎', tag: 'beginner', cat: 'beginner' },
+    { name: 'Expense Tracker', icon: '$', tag: 'tool', cat: 'tool', featured: true },
+    { name: 'Pomodoro Timer', icon: '◷', tag: 'beginner', cat: 'beginner' },
+    { name: 'Calculator', icon: '÷', tag: 'beginner', cat: 'beginner' },
+    { name: 'Currency Converter', icon: '↔', tag: 'api', cat: 'api' },
+    { name: 'BMI Calculator', icon: '⚖', tag: 'tool', cat: 'tool' },
+    { name: 'Habit Tracker', icon: '◈', tag: 'tool', cat: 'tool' },
+    { name: 'URL Shortener UI', icon: '↗', tag: 'tool', cat: 'tool' },
+    { name: 'GitHub Profile Finder', icon: '◉', tag: 'api', cat: 'api', featured: true },
+    { name: 'Random Quote Gen', icon: '«»', tag: 'api', cat: 'api' },
+    { name: 'Movie Search App', icon: '▶', tag: 'api', cat: 'api' },
+    { name: 'Recipe Finder', icon: '◎', tag: 'api', cat: 'api' },
+    { name: 'Markdown Previewer', icon: 'Md', tag: 'tool', cat: 'tool' },
+    { name: 'Quiz App', icon: '?', tag: 'beginner', cat: 'beginner', featured: true },
+    { name: 'Flashcard App', icon: '▭', tag: 'beginner', cat: 'beginner' },
+    { name: 'Kanban Board', icon: '▤', tag: 'tool', cat: 'tool' },
+    { name: 'Chat UI Clone', icon: '◌', tag: 'tool', cat: 'tool' },
+    { name: 'E-commerce Page', icon: '◇', tag: 'tool', cat: 'tool' },
+    { name: 'Meme Generator', icon: '☻', tag: 'tool', cat: 'tool' },
+    { name: 'Color Palette Gen', icon: '◑', tag: 'tool', cat: 'tool' },
+    { name: 'AI Prompt Library', icon: '⋮', tag: 'api', cat: 'api' },
+    { name: 'Resume Builder', icon: '▣', tag: 'tool', cat: 'tool' },
+    { name: 'Unit Converter', icon: '≈', tag: 'beginner', cat: 'beginner' },
+    { name: 'Typing Speed Test', icon: '⌨', tag: 'tool', cat: 'tool' },
+    { name: 'Rock Paper Scissors', icon: '✊', tag: 'game', cat: 'game' },
+    { name: 'Tic-Tac-Toe', icon: '#', tag: 'game', cat: 'game' },
+]
+
+export const FILTERS: { label: string; value: 'all' | Project['cat'] }[] = [
+    { label: 'All', value: 'all' },
+    { label: 'Beginner', value: 'beginner' },
+    { label: 'Uses API', value: 'api' },
+    { label: 'Games', value: 'game' },
+    { label: 'Tools', value: 'tool' },
+]
