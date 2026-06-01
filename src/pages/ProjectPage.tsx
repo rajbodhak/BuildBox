@@ -1,6 +1,8 @@
 import { Link, useParams } from 'react-router-dom'
 import { lazy, Suspense, type ComponentType, createElement } from 'react'
 import { Component, type ReactNode } from 'react'
+import { useParams, Link } from 'react-router'
+import { lazy, Suspense, type ComponentType, createElement } from 'react'
 import { projects } from '../data/projects'
 
 const pageModules = import.meta.glob('./*.tsx')
@@ -19,6 +21,15 @@ function getPageComponent(slug: string) {
     if (!importer) return null
 
     return lazy(importer as () => Promise<{ default: ComponentType }>)
+}
+
+const pageCache: Record<string, ComponentType> = {}
+
+function getPageComponent(slug: string) {
+    if (!pageCache[slug]) {
+        pageCache[slug] = loadPage(slug)
+    }
+    return pageCache[slug]
 }
 
 export default function ProjectPage() {
@@ -45,6 +56,7 @@ export default function ProjectPage() {
         )
     }
 
+
     const PageComponent = getPageComponent(slug)
 
     if (!PageComponent) {
@@ -55,6 +67,11 @@ export default function ProjectPage() {
         <Suspense fallback={<PageLoader />}>
             <ErrorBoundary fallback={<ComingSoon project={project} />}>
                 {createElement(PageComponent)}
+    return (
+        <Suspense fallback={<PageLoader />}>
+            <ErrorBoundary fallback={<ComingSoon project={project} />}>
+                {createElement(getPageComponent(slug!))}
+
             </ErrorBoundary>
         </Suspense>
     )
