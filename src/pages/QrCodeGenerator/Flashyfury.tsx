@@ -150,8 +150,9 @@ export default function Flashyfury() {
                         <div ref={qrRef} className="w-full h-full [&>svg]:w-full [&>svg]:h-full" />
                     </div>
                 </div>
-              
-             {/*ACTIONS*/}
+            </div>
+
+            {/*Actions*/}
             <div className="flex gap-2 mt-3">
                 <button
                     onClick={downloadQR}
