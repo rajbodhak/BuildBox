@@ -26,7 +26,6 @@ export default function Flashyfury() {
     const [copied, setCopied] = useState(false);
     const [downloaded, setDownloaded] = useState(false);
     const [text, setText] = useState('https://buildbox.dev');
-
     const qrRef = useRef<HTMLDivElement>(null);
     const [qrCode] = useState(() => new QRCodeStyling(defaultOptions));
 
@@ -151,8 +150,8 @@ export default function Flashyfury() {
                         <div ref={qrRef} className="w-full h-full [&>svg]:w-full [&>svg]:h-full" />
                     </div>
                 </div>
-            </div>
-
+              
+             {/*ACTIONS*/}
             <div className="flex gap-2 mt-3">
                 <button
                     onClick={downloadQR}
