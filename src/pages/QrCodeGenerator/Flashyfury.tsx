@@ -23,8 +23,10 @@ const defaultOptions: Options = {
 
 export default function Flashyfury() {
     const [activeTab, setActiveTab] = useState<DataTab>('url');
+    const [copied, setCopied] = useState(false);
+    const [downloaded, setDownloaded] = useState(false);
     const [text, setText] = useState('https://buildbox.dev');
-    
+
     const qrRef = useRef<HTMLDivElement>(null);
     const [qrCode] = useState(() => new QRCodeStyling(defaultOptions));
 
@@ -32,6 +34,7 @@ export default function Flashyfury() {
         if (qrRef.current) {
             qrRef.current.innerHTML = '';
             qrCode.append(qrRef.current);
+            qrCode.update({ data: text });
         }
     }, [qrCode]);
 
@@ -44,6 +47,49 @@ export default function Flashyfury() {
         setActiveTab(tabId);
         const tab = TABS.find(t => t.id === tabId);
         if (tab) setText(tab.placeholder);
+    };
+
+    const createExportQR = () =>
+        new QRCodeStyling({
+            ...defaultOptions,
+            data: text.trim(),
+            margin: 20,
+            backgroundOptions: {
+                color: '#ffffff',
+            },
+        });
+
+    const downloadQR = async () => {
+        const exportQR = createExportQR();
+
+        await exportQR.download({
+            name: 'buildbox-qr',
+            extension: 'png',
+        });
+
+        setDownloaded(true);
+        setTimeout(() => setDownloaded(false), 2000);
+    };
+
+    const copyQR = async () => {
+        try {
+            const exportQR = createExportQR();
+
+            const blob = await exportQR.getRawData('png');
+
+            if (!blob) return;
+
+            await navigator.clipboard.write([
+                new ClipboardItem({
+                    'image/png': blob,
+                }),
+            ]);
+
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (
@@ -70,11 +116,10 @@ export default function Flashyfury() {
                     <button
                         key={tab.id}
                         onClick={() => handleTabChange(tab.id)}
-                        className={`font-mono text-xs px-4 py-2 rounded-lg transition-colors ${
-                            activeTab === tab.id
-                                ? 'bg-(--accent) text-white'
-                                : 'bg-(--code-bg) border border-(--border) text-(--text) hover:text-(--text-h)'
-                        }`}
+                        className={`font-mono text-xs px-4 py-2 rounded-lg transition-colors ${activeTab === tab.id
+                            ? 'bg-(--accent) text-white'
+                            : 'bg-(--code-bg) border border-(--border) text-(--text) hover:text-(--text-h)'
+                            }`}
                     >
                         {tab.label}
                     </button>
@@ -102,10 +147,26 @@ export default function Flashyfury() {
             {/* Result */}
             <div className="flex flex-col gap-3">
                 <div className="bg-(--code-bg) border border-(--accent-border) rounded-2xl p-6 flex flex-col items-center justify-center">
-                    <div className="bg-white p-4 rounded-xl shadow-sm w-full max-w-[300px] aspect-square flex items-center justify-center">
+                    <div className="bg-white p-4 rounded-xl shadow-sm w-full max-w-75 aspect-square flex items-center justify-center">
                         <div ref={qrRef} className="w-full h-full [&>svg]:w-full [&>svg]:h-full" />
                     </div>
                 </div>
+            </div>
+
+            <div className="flex gap-2 mt-3">
+                <button
+                    onClick={downloadQR}
+                    className="flex-1 font-mono text-sm bg-(--accent) text-white px-4 py-2.5 rounded-lg hover:opacity-85 transition-opacity"
+                >
+                    {downloaded ? 'Downloaded ✓' : 'Download'}
+                </button>
+
+                <button
+                    onClick={copyQR}
+                    className="flex-1 font-mono text-sm border border-(--border) text-(--text-h) px-4 py-2.5 rounded-lg hover:bg-(--code-bg)"
+                >
+                    {copied ? 'Copied ✓' : 'Copy'}
+                </button>
             </div>
         </div>
     );
